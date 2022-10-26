@@ -1,6 +1,5 @@
 from tkinter import N
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import HttpResponse, render, redirect
 from django.views import View
 #Contrib
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -11,9 +10,13 @@ from django.core.files.storage import FileSystemStorage
 from enderecos.models import Endereco
 from lojas.models import Loja, Plano
 from colecoes.models import Colecao
-from pedidos.models import Pedido, Item
+from pedidos.models import Item, Pedido
 from roupas.models import Categoria, Roupa
+
+from django.views.decorators.csrf import csrf_exempt
+import uuid
 # Create your views here.
+
 
 def get_POST_form_fields(request, fields):
     dicionario = {}
@@ -116,11 +119,7 @@ class AtualizarParaContaComercial(View):
 
 class MinhasColecoes(View):
     def get(self, request):
-        context = {}
-        if request.user.is_authenticated:
-            roupas = Roupa.objects.filter(colecao__loja=request.user.loja).order_by('data_adicao')
-            context['roupas'] = roupas
-        return render(request, 'minhas_colecoes.html', context)
+        return render(request, 'minhas_colecoes.html')
     def post(self, request):
         pass
 
@@ -206,10 +205,25 @@ class LojaVer(View):
 
 class RoupaVer(View):
     def get(self, request, cidade, loja, roupa):
+
+        # Caso o usuário não esteja conectado.
         context = {}
         context['loja'] = Loja.objects.get(nome_loja=loja)
         context['roupa'] = Roupa.objects.get(pk=roupa)
-        return render(request, 'ropa.html', context)
+
+        if(request.user.is_authenticated):
+            print('Conectado')
+            context['user_id'] = request.user.pk
+            return render(request, 'ropa.html', context)
+        else:
+
+            # Usuário Anônimo.
+            # Gerar um ID único para o usuário não conectado!
+            id_unico = uuid.uuid4()
+            print(id_unico)
+            context['user_id'] = id_unico
+            return render(request, 'ropa.html', context)
+
     def post(self, request):
         pass
 
@@ -226,25 +240,28 @@ class MeusPacotes(View):
             pedidos = Pedido.objects.filter(usuario_pedinte=request.user)
             context['pedidos'] = pedidos
         return render (request, 'meusPacotes.html', context)
+
     def post(self, request):
-      # Receber e pegar parâmetros.
+
+        # Receber e pegar parâmetros.
         id = request.POST.get('product_id')
         quantidade = request.POST.get('product_qnt')
         tamanho = request.POST.get('product_size')
         loja_id = request.POST.get('loja_id')
+        user_id = request.POST.get('user_id')
         
         roupa = Roupa.objects.get(pk=id)
 
         item = Item.objects.create(
+            user_id=user_id,
             roupa=roupa,
             tamanho=tamanho,
             quantidade=quantidade,
         )
 
-        print(item)
-        
-        return HttpResponse('Salve')
+        Pedido.objects.adicionar_item(item=item, user_id=user_id, loja_id=loja_id)
 
+        return HttpResponse('Salve')
 
 class MeusPedidos(View):
     def get(self, request):
