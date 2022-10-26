@@ -82,7 +82,7 @@
         </ul>
 
 
-        <a href="{% url 'meus_pedidos'%}">
+        <a href="{% url 'meus_pedidos' %}">
             <button class="c-menu-gerenciador">
                 <p>
                     <span> > </span> PEDIDOS
@@ -99,10 +99,40 @@
         </a>
 
     </div>
-
     <div class="l-colections">
         {% if pk %}
+        <h2>Todas as roupas</h2>
         {% card_colecoes request pk %}
+        {% elif roupas %}
+        {% for roupa in roupas %}
+            <div class="c-card-colection">
+                <img src="{{roupa.foto.url}}" alt="">
+                <div class="c-card-colection__infos">
+                    <h3>{{roupa.nome_roupa}}</h3>
+                    <p>QTD: {{roupa.t1|add:roupa.t2|add:roupa.t3|add:roupa.t4|add:roupa.t5|add:roupa.t6}}</p>
+                    <div class="conttt">
+                        {% if roupa.categoria.tipo_tamanho.nome_tipo == 'Letra' %}
+                        <button class="bnt_tamanho_2 {% if roupa.t1 < 1 or not roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t2 < 1 or not roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t3 < 1 or not roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t4 < 1 or not roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t5 < 1 or not roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t6 < 1 or not roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
+                        {% elif roupa.categoria.tipo_tamanho.nome_tipo == 'Numero' %}
+                        <button class="bnt_tamanho_2 {% if roupa.t1 < 1 or not roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t2 < 1 or not roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t3 < 1 or not roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t4 < 1 or not roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t5 < 1 or not roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                        <button class="bnt_tamanho_2 {% if roupa.t6 < 1 or not roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
+                        {% endif %}
+                    </div>
+                    <div class="c-barraBaixa">
+                        <p>Add: {{roupa.data_adicao}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         {% endif %}
         <!-- CARD -->
         {% comment %} {% for roupa in roupas %}
@@ -177,7 +207,7 @@
 
     <!-- modal -->
 
-    <div id="mod" class="l-modal_add" style="z-index: 1;">
+    <div id="mod" class="l-modal_add" style="z-index: 1;transition: 0.3s ease-in-out all">
         <div class="container" id="categorias">
             <div class="row">
                 <div class="col-12">

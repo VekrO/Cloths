@@ -2,6 +2,7 @@ from ast import If
 import re
 from unicodedata import name
 from django import template
+from pedidos.models import Pedido
 from users.models import User
 from colecoes.models import Colecao
 from lojas.models import Loja
@@ -108,3 +109,18 @@ def footer():
     return {
         
     }
+
+@register.inclusion_tag('gerenciador.html')
+def gerenciador():
+    return {
+
+    }
+
+@register.inclusion_tag('card_pacote.html')
+def card_pacote(request):
+    context = {}
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+        pedidos = Pedido.objects.filter(usuario_pedinte=user)
+        context['pedidos'] = pedidos
+    return context

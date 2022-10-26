@@ -31,7 +31,7 @@
     <div class="l-gerenciador">
         <button class="c-bnt-gerenciador"> <span> + </span> Novo Pacote </button>
 
-        <a href="minhas_colecoes.html">
+        <a href="{% url 'meus_pacotes'%}">
             <button class="c-menu-gerenciador active-menu">
                 <p>
                     <span> > </span> PACOTES
@@ -39,7 +39,7 @@
             </button>
         </a>
 
-        <a href="historico_pedidos.html">
+        <a href="{% url 'em_breve'%}">
             <button class="c-menu-gerenciador">
                 <p>
                     <span> > </span> PACOTES ENVIADOS
@@ -47,7 +47,7 @@
             </button>
         </a>
 
-        <a href="historico_pedidos.html">
+        <a href="{% url 'em_breve' %}">
             <button class="c-menu-gerenciador">
                 <p>
                     <span> > </span> HISTÓRICO DE PACOTES
@@ -59,8 +59,8 @@
 
 
     <div class="l-colections">
-
-        <!-- CARD -->
+        {% card_pacote request %}
+{% comment %}         <!-- CARD -->
 
         <div class="c-card-pacotes" style="margin-left: 15px">
             <a href="">
@@ -84,13 +84,13 @@
             <div class="c-card-colection__infos" style="padding: 20px 0px;">
                 <h3>Nome da loja</h3>
                 <p style="height: 5px;">04 peças</p>
-                <button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button>
+                <a href="{% url 'ver_pedido' %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
                 <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
                 <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
             </div>
         </div>
 
-        <!-- CARD -->
+        <!-- CARD --> {% endcomment %}
 
     </div>
 

@@ -115,7 +115,11 @@ class AtualizarParaContaComercial(View):
 
 class MinhasColecoes(View):
     def get(self, request):
-        return render(request, 'minhas_colecoes.html')
+        context = {}
+        if request.user.is_authenticated:
+            roupas = Roupa.objects.filter(colecao__loja=request.user.loja).order_by('data_adicao')
+            context['roupas'] = roupas
+        return render(request, 'minhas_colecoes.html', context)
     def post(self, request):
         pass
 
@@ -216,21 +220,29 @@ class EmBreve(View):
 
 class MeusPacotes(View):
     def get(self, request):
+        context = {}
         if request.user.is_authenticated:
-            pedido = Pedido.objects.filter()
-        return render (request, 'meusPacotes.html')
+            pedidos = Pedido.objects.filter(usuario_pedinte=request.user)
+            context['pedidos'] = pedidos
+        return render (request, 'meusPacotes.html', context)
     def post(self, request):
         pass
 
 class MeusPedidos(View):
     def get(self, request):
-        return render (request, 'pedidos.html')
+        context = {}
+        pedidos = Pedido.objects.filter(loja=request.user.loja).order_by('data_pedido')
+        context['pedidos'] = pedidos
+        return render (request, 'pedidos.html', context)
     def post(self, request):
         pass
 
 class VerPedido(View):
-    def get(self, request):
+    def get(self, request, pk):
         #é só para lojas
-        return render(request, 'pedido.html')
+        context = {}
+        pedido = Pedido.objects.get(pk=pk)
+        context['pedido'] = pedido
+        return render(request, 'pedido.html', context)
     def post(self, request):
         pass

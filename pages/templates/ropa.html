@@ -21,8 +21,8 @@
 
         <div class="c-container-roupa__informacoes">
             <div class="c-container-ropa__loja">
-                <a href=""><img src="{{loja.logo_loja.url}}" alt=""></a>
-                <a href="">
+                <a href="{% url 'loja' loja.endereco.estado loja.nome_loja %}"><img src="{{loja.logo_loja.url}}" alt=""></a>
+                <a href="{% url 'loja' loja.endereco.estado loja.nome_loja %}">
                     <h1>{{loja.nome_loja}}</h1>
                 </a>
             </div>

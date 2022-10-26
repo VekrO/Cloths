@@ -25,5 +25,5 @@ urlpatterns = [
     path('lojas_cadastradas/<str:cidade>/', views.LojasCidade.as_view(), name='cidade'),
     path('lojas_cadastradas/<str:cidade>/<str:loja>/', views.LojaVer.as_view(), name='loja'),
     path('lojas_cadastradas/<str:cidade>/<str:loja>/<int:roupa>/', views.RoupaVer.as_view(), name='roupa'),
-    path('perfil/pedido/', views.VerPedido.as_view(), name='ver_pedido'),
+    path('pedido/<int:pk>', views.VerPedido.as_view(), name='ver_pedido'),
 ]

@@ -60,24 +60,25 @@
 
     <div class="l-colections">
 
-        <!-- CARD -->
+        {% for pedido in pedidos %}
+                <!-- CARD -->
 
-        <div class="c-card-colection" style="height: 350px;">
-            <a href="{% url 'ver_pedido' %}" ><img src="{% static 'imagens/9a5a18d55121d82359078da58c64e0fb.jpg' %}" alt=""></a>
-            <div class="c-card-colection__infos">
-                <h3>Nome de quem pediu</h3>
-                <p style="height: 5px;">04 peças</p>
-                <div class="c-barraBaixa">
-                    <p style="width: 100%">Data do pedido: 13/11/2022</p>
+                <div class="c-card-colection" style="height: 350px;">
+                    <a href="{% url 'ver_pedido' pedido.pk %}" ><img src="{{pedido.usuario_pedinte.foto_usuario.url}}" alt=""></a>
+                    <div class="c-card-colection__infos">
+                        <h3>{{pedido.usuario_pedinte.nome}}</h3>
+                        <p style="height: 5px;">04 peças (falta)</p>
+                        <div class="c-barraBaixa">
+                            <p style="width: 100%">Data do pedido: {{pedido.data_pedido}}</p>
+                            <br>
+                        </div>
+                        <a href="{% url 'ver_pedido' pedido.pk %}"><button class="addList" style="font-size: 10px">Ver dados do Pedido</button></a>
+                        <button class="addList" style="font-size: 10px; background-color: #43a047;">Finalizar Pedido</button>
+                    </div>
                 </div>
-                <a href="{% url 'ver_pedido' %}"><button class="addList" style="font-size: 10px">Ver dados do Pedido</button></a>
-                <button class="addList" style="font-size: 10px; background-color: #43a047;">Finalizar Pedido</button>
-            </div>
-        </div>
-
-        <!-- CARD -->
-
-
+        
+                <!-- CARD -->
+        {% endfor %}
     </div>
 
 </div>

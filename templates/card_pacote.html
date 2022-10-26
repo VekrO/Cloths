@@ -1,0 +1,36 @@
+{% load static %}
+{% load post_tags %}
+
+{% for pedido in pedidos %}
+<!-- CARD -->
+
+<div class="c-card-pacotes" style="margin-left: 15px">
+    <a href="{% url 'ver_pedido' pedido.pk %}">
+        <div class="img">
+            <img style="z-index: 5;height:300px;object-fit: cover;" src="{{pedido.itens.all.0.roupa.foto.url}}"
+                alt="">
+            <img style="margin-left: -160px; z-index: 4;"
+                src="{{pedido.itens.all.1.roupa.foto.url}}"
+                alt="">
+            <img style="margin-left: -140px; z-index: 3;"
+                src="{{pedido.itens.all.2.roupa.foto.url}}"
+                alt="">
+            {% comment %} <img style="margin-left: -180px; z-index: 2;"
+                src="{{pedido.itens.all.3.roupa.foto.url}}"
+                alt="">
+            <img style="margin-left: -180px; z-index: 1;"
+                src="{{pedido.itens.all.4.roupa.foto.url}}"
+                alt=""> {% endcomment %}
+        </div>
+    </a>
+    <div class="c-card-colection__infos" style="padding: 20px 0px;">
+        <h3>{{pedido.loja.nome_loja}}</h3>
+        <p style="height: 5px;">04 peças</p>
+        <a href="{% url 'ver_pedido' pedido.pk %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
+        <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
+        <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
+    </div>
+</div>
+
+<!-- CARD -->
+{% endfor %}

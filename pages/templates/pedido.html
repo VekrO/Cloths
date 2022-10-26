@@ -2,6 +2,7 @@
 {% block title %}Pedido{% endblock title %}
 {% load static %}
 {% load post_tags %}
+{% load mathfilters %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'stylesCSS/style.css' %}">
     <link rel="stylesheet" href="{% static 'stylesCSS/gerenciador.css' %}">
@@ -67,17 +68,17 @@
 
             <div class="row">
                 <div class="col-3">
-                    <img src="{% static 'imagens/9a5a18d55121d82359078da58c64e0fb.jpg' %}" class="img_pff" alt="">
+                    <img src="{{pedido.usuario_pedinte.foto_usuario.url}}" class="img_pff" alt="">
                 </div>
                 <div class="col">
                     <div class="dt_pedido">
                         <br>
-                        <h5 style="margin-bottom: 20px;">Nome do Usuario</h5>
-                        <p><span>Email:</span> Exemplodeemail@gmail.com</p>
-                        <p><span>Telefone:</span> (69) 9843442-8922</p>
-                        <p><span>Endereço:</span> Av. Dois de Junho, 2251 - Centro, Cacoal - RO, 76963-767</p>
-                        <p><span>Data do Pedido:</span> 12/11/2022</p>
-                        <p><span>N° de peças:</span> 13</p>
+                        <h5 style="margin-bottom: 20px;">{{pedido.usuario_pedinte.nome}}</h5>
+                        <p><span>Email:</span> {{pedido.usuario_pedinte.email}}</p>
+                        <p><span>Telefone:</span> {{pedido.usuario_pedinte.telefone}}</p>
+                        <p><span>Endereço:</span> {{pedido.usuario_pedinte.endereco.rua}}, {{pedido.usuario_pedinte.endereco.numero}} - {{pedido.usuario_pedinte.endereco.bairro}}, {{pedido.usuario_pedinte.endereco.cidade}} - {{pedido.usuario_pedinte.endereco.estado}}, {{pedido.usuario_pedinte.endereco.cep}}</p>
+                        <p><span>Data do Pedido:</span> {{pedido.data_pedido}}</p>
+                        <p><span>N° de peças:</span> Falta fazer</p>
                     </div>
                 </div>
             </div>
@@ -96,23 +97,34 @@
                 <div class="col-12">
                     <div class="box-ropas-solicitadas">
 
+                        {% for item in pedido.itens.all %}
                         <!-- CARDS -->
 
                         <div class="card-rs">
-                            <img src="{% static 'imagens/91f7809806c940b2b5ded485a5d10528_w432_h576_q85.webp' %}" alt="">
+                            <img src="{{item.roupa.foto.url}}" alt="">
 
                             <p>Tamanhos solicitados</p>
                             <div class="conttt" style="background-color: white; padding: 10px;">
-                                <button class="bnt_tamanho_2 tem" disabled>PP</button>
-                                <button class="bnt_tamanho_2 tem" disabled>P</button>
-                                <button class="bnt_tamanho_2 nao_tem" disabled>M</button>
-                                <button class="bnt_tamanho_2 nao_tem" disabled>G</button>
-                                <button class="bnt_tamanho_2 nao_tem" disabled>GG</button>
-                                <button class="bnt_tamanho_2 nao_tem" disabled>XG</button>
+                                {% if item.roupa.categoria.tipo_tamanho.nome_tipo == 'Letra' %}
+                                <button class="bnt_tamanho_2 {% if item.roupa.t1 < 1 or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t2 < 1 or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t3 < 1 or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t4 < 1 or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t5 < 1 or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t6 < 1 or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
+                                {% elif item.roupa.categoria.tipo_tamanho.nome_tipo == 'Numero' %}
+                                <button class="bnt_tamanho_2 {% if item.roupa.t1 < 1 or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t2 < 1 or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t3 < 1 or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t4 < 1 or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t5 < 1 or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                                <button class="bnt_tamanho_2 {% if item.roupa.t6 < 1 or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
+                                {% endif %}
                             </div>
-                            <p style="margin-top: 0;">Número de peças: <span>13</span></p>
+                            <p style="margin-top: 0;">Número de peças: <span>{{item.roupa.t1|add:item.roupa.t2|add:item.roupa.t3|add:item.roupa.t4|add:item.roupa.t5|add:item.roupa.t6}}</span></p>
                         </div>
-
+                        
+                        {% endfor %}
                     </div>
                 </div>
             </div>
