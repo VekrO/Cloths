@@ -112,6 +112,7 @@ def footer():
 
 @register.inclusion_tag('gerenciador.html')
 def gerenciador():
+    
     return {
 
     }

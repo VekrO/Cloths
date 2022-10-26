@@ -73,14 +73,14 @@
             <!-- ou -->
 
             <br>
-            <button style="width: 60%;" class="addList" onclick="add('mod')">Adicionar a lista</button>
+            <button style="width: 60%;" type="button" class="addList" onclick="openModal('mod')">Adicionar a lista</button>
 
         </div>
 
     </div>
 </div>
 
-<div class="l-modal_add" id="mod" style="z-index: 1; height: 85vh;">
+<div class="l-modal_add" id="mod" style="z-index: 1; height: 85vh; transition: 0.5s ease-in-out;">
     <div class="container" id="categorias">
         <div class="row">
             <div class="col-12">
@@ -132,25 +132,25 @@
                     {% endif %}
                 </div>
 
-                <form action="">
+                <form action="" method="POST" class="form-add">
                     <h5 style="margin-top: 15px; margin-bottom: 15px;">Quantidade desejada ( Por tamanho )</h5>
                     {% if roupa.categoria.tipo_tamanho.nome_tipo == "Letra" %}
                         <div class="conttt" style="width: 100%;">
-                            <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1 %}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2 %}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3 %}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4 %}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5 %}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6 %}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="PP" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1 %}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="P" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2 %}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="M" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3 %}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="G" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4 %}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="GG" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5 %}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="XG" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6 %}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
                         </div>
                     {% elif roupa.categoria.tipo_tamanho.nome_tipo == "Numero" %}
                     <div class="conttt" style="width: 100%;">
-                        <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1%}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2%}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3%}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4%}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5%}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem{% endif %}" style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6%}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="34"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1%}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="35"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2%}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="36"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3%}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="37"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4%}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="38"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5%}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="39+"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6%}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
                     </div>
                     {% endif %}
                     
@@ -159,13 +159,13 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <button style="background-color: #FFA41C; width: 100%;" class="addList">ADICIONAR</button>
+                            <button style="background-color: #FFA41C; width: 100%;" type="submit" data-id="{{ roupa.pk }}" data-lojaid="{{loja.pk}}" class="addList addButton">ADICIONAR</button>
                         </div>
                     </div>
                 </form>
                 <div class="row">
                     <div class="col-12">
-                        <button onclick="add('mod')" class="addList" style=" width: 100%;">CANCELAR</button>
+                        <button onclick="closeModal('mod')" type="button" class="addList" style="width: 100%;">CANCELAR</button>
                     </div>
                 </div>
             </div>
@@ -195,6 +195,10 @@
     }
 </script>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% footer %}
 {% endblock content %}
+{% block scripts %}
+<script src="{% static 'script/cart.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+{% endblock scripts %}

@@ -1,2 +1,65 @@
 {% load static %}
 {% load mathfilters %}
+
+
+<!--Para loja-->
+<div class="l-gerenciador">
+    <button class="c-bnt-gerenciador"> <span> + </span> Nova coleção </button>
+
+    <a href="{% url 'minhas_colecoes' %}">
+        <button class="c-menu-gerenciador">
+            <p>
+                <span> > </span> COLEÇÕES
+            </p>
+        </button>
+    </a>
+
+    <a href="">
+        <button class="c-menu-gerenciador active-menu">
+            <p>
+                <span> > </span> PEDIDOS
+            </p>
+        </button>
+    </a>
+
+    <a href="historico_pedidos.html">
+        <button class="c-menu-gerenciador">
+            <p>
+                <span> > </span> HISTORICO DE PEDIDOS
+            </p>
+        </button>
+    </a>
+
+</div>
+
+
+<!--Para normal user-->
+
+<div class="l-gerenciador">
+    <button class="c-bnt-gerenciador"> <span> + </span> Novo Pacote </button>
+
+    <a href="{% url 'meus_pacotes'%}">
+        <button class="c-menu-gerenciador active-menu">
+            <p>
+                <span> > </span> PACOTES
+            </p>
+        </button>
+    </a>
+
+    <a href="{% url 'em_breve'%}">
+        <button class="c-menu-gerenciador">
+            <p>
+                <span> > </span> PACOTES ENVIADOS
+            </p>
+        </button>
+    </a>
+
+    <a href="{% url 'em_breve' %}">
+        <button class="c-menu-gerenciador">
+            <p>
+                <span> > </span> HISTÓRICO DE PACOTES
+            </p>
+        </button>
+    </a>
+
+</div>
