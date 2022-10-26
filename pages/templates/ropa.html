@@ -21,8 +21,8 @@
 
         <div class="c-container-roupa__informacoes">
             <div class="c-container-ropa__loja">
-                <a href="{% url 'loja' loja.endereco.estado loja.nome_loja %}"><img src="{{loja.logo_loja.url}}" alt=""></a>
-                <a href="{% url 'loja' loja.endereco.estado loja.nome_loja %}">
+                <a href=""><img src="{{loja.logo_loja.url}}" alt=""></a>
+                <a href="">
                     <h1>{{loja.nome_loja}}</h1>
                 </a>
             </div>
@@ -33,22 +33,22 @@
 
             <div class="conttt" style="width: 60%;">
                 {% if roupa.categoria.tipo_tamanho.nome_tipo == 'Letra' %}
-                    <button class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
-                    <button class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
-                    <button class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
-                    <button class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
-                    <button class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
-                    <button class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
+                    <button class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1 %} nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                    <button class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2 %} nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                    <button class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3 %} nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                    <button class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4 %} nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                    <button class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5 %} nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                    <button class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6 %} nao_tem {% else %}tem{% endif %}" disabled>XG</button>
                 {% elif roupa.categoria.tipo_tamanho.nome_tipo == 'Numero' %}
-                    <button class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
-                    <button class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
-                    <button class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
-                    <button class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
-                    <button class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
-                    <button class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
+                    <button class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1 %} nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                    <button class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2 %} nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                    <button class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3 %} nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                    <button class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4 %} nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                    <button class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5 %} nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                    <button class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6 %} nao_tem {% else %}tem{% endif %}" disabled>39+</button>
                 {% endif %}
             </div>
-
+            
             {% comment %} {% if roupa.categoria.tipo_tamanho.nome_tipo == "Letra" %}
                 <div class="conttt" style="width: 60%;">
                     <button class="bnt_tamanho {% if roupa.pp < 1 or not roupa.pp %}nao_tem{% else %}tem{% endif %}" {% if roupa.pp < 1 or not roupa.pp %}disabled{% endif %}>PP</button>
@@ -159,7 +159,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <button style="background-color: #FFA41C; width: 100%;" type="submit" data-id="{{ roupa.pk }}" data-lojaid="{{loja.pk}}" class="addList addButton">ADICIONAR</button>
+                            <button style="background-color: #FFA41C; width: 100%;" type="submit" data-userid="{{ user_id }}" data-id="{{ roupa.pk }}" data-lojaid="{{loja.pk}}" class="addList addButton userInfo">ADICIONAR</button>
                         </div>
                     </div>
                 </form>

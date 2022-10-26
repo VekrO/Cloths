@@ -2,6 +2,8 @@ let products = document.querySelectorAll('.esseprodutotem');
 let formAdd = document.querySelector('.form-add');
 
 // Stopping form submit.
+console.log('k')
+
 formAdd.addEventListener('submit', (e)=>{
 
     e.preventDefault();
