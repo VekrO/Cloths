@@ -9,9 +9,7 @@ formAdd.addEventListener('submit', (e)=>{
     // Code ...
     products.forEach((element)=> {
         soma += parseInt(element.value)
-        console.log(element)
     })
-    console.log(soma)
 
     if(soma == 0){
         Swal.fire( "Oops" ,  "Você precisa adicionar algo!" ,  "error");
@@ -27,6 +25,7 @@ formAdd.addEventListener('submit', (e)=>{
                         'product_qnt': element.value,
                         'product_size': element.dataset.size,
                         'loja_id': document.querySelector('.addButton').dataset.lojaid,
+                        'user_id': document.querySelector('.userInfo').dataset.userid,
                     },
                     headers: {
                         "X-CSRFToken": getCookie("csrftoken")
