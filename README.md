@@ -1,2 +1,4 @@
 # Cloths
-Loja Virtual
+Projeto Cloths
+
+## Loja Virtual
