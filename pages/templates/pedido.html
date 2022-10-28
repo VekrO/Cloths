@@ -30,34 +30,11 @@
 <div class="l-container-colecoes">
 
 
-    <div class="l-gerenciador">
-        <button class="c-bnt-gerenciador"> <span> + </span> Nova coleção </button>
-
-        <a href="{% url 'minhas_colecoes' %}">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> COLEÇÕES
-                </p>
-            </button>
-        </a>
-
-        <a href="">
-            <button class="c-menu-gerenciador active-menu">
-                <p>
-                    <span> > </span> PEDIDOS
-                </p>
-            </button>
-        </a>
-
-        <a href="historico_pedidos.html">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> HISTORICO DE PEDIDOS
-                </p>
-            </button>
-        </a>
-
-    </div>
+    {% gerenciador_loja %}
+    <script>
+        link = document.getElementById('pedidos')
+        link.classList.add('active-menu')
+    </script>
 
 
     <div class="l-colections">
@@ -67,20 +44,22 @@
             <!-- informaçoes do pedido -->
 
             <div class="row">
-                <div class="col-3">
-                    <img src="{{pedido.usuario_pedinte.foto_usuario.url}}" class="img_pff" alt="">
-                </div>
-                <div class="col">
-                    <div class="dt_pedido">
-                        <br>
-                        <h5 style="margin-bottom: 20px;">{{pedido.usuario_pedinte.nome}}</h5>
-                        <p><span>Email:</span> {{pedido.usuario_pedinte.email}}</p>
-                        <p><span>Telefone:</span> {{pedido.usuario_pedinte.telefone}}</p>
-                        <p><span>Endereço:</span> {{pedido.usuario_pedinte.endereco.rua}}, {{pedido.usuario_pedinte.endereco.numero}} - {{pedido.usuario_pedinte.endereco.bairro}}, {{pedido.usuario_pedinte.endereco.cidade}} - {{pedido.usuario_pedinte.endereco.estado}}, {{pedido.usuario_pedinte.endereco.cep}}</p>
-                        <p><span>Data do Pedido:</span> {{pedido.data_pedido}}</p>
-                        <p><span>N° de peças:</span> Falta fazer</p>
+                {% if usuario_pedinte %}
+                    <div class="col-3">
+                        <img src="{{usuario_pedinte.foto_usuario.url}}" class="img_pff" alt="">
                     </div>
-                </div>
+                    <div class="col">
+                        <div class="dt_pedido">
+                            <br>
+                            <h5 style="margin-bottom: 20px;">{{usuario_pedinte.nome}}</h5>
+                            <p><span>Email:</span> {{usuario_pedinte.email}}</p>
+                            <p><span>Telefone:</span> {{usuario_pedinte.telefone}}</p>
+                            <p><span>Endereço:</span> {{usuario_pedinte.endereco.rua}}, {{usuario_pedinte.endereco.numero}} - {{usuario_pedinte.endereco.bairro}}, {{usuario_pedinte.endereco.cidade}} - {{usuario_pedinte.endereco.estado}}, {{usuario_pedinte.endereco.cep}}</p>
+                            <p><span>Data do Pedido:</span> {{pedido.data_pedido}}</p>
+                            <p><span>N° de peças:</span> {% conta_pecas_pedido pedido %}</p>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="row">
@@ -106,22 +85,31 @@
                             <p>Tamanhos solicitados</p>
                             <div class="conttt" style="background-color: white; padding: 10px;">
                                 {% if item.roupa.categoria.tipo_tamanho.nome_tipo == 'Letra' %}
-                                <button class="bnt_tamanho_2 {% if item.roupa.t1 < 1 or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t2 < 1 or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t3 < 1 or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t4 < 1 or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t5 < 1 or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t6 < 1 or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't1' or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't2' or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't3' or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't4' or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't5' or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't6' or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
                                 {% elif item.roupa.categoria.tipo_tamanho.nome_tipo == 'Numero' %}
-                                <button class="bnt_tamanho_2 {% if item.roupa.t1 < 1 or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t2 < 1 or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t3 < 1 or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t4 < 1 or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t5 < 1 or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
-                                <button class="bnt_tamanho_2 {% if item.roupa.t6 < 1 or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't1' or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't2' or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't3' or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't4' or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't5' or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                                    <button class="bnt_tamanho_2 {% if item.tamanho != 't6' or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
                                 {% endif %}
                             </div>
-                            <p style="margin-top: 0;">Número de peças: <span>{{item.roupa.t1|add:item.roupa.t2|add:item.roupa.t3|add:item.roupa.t4|add:item.roupa.t5|add:item.roupa.t6}}</span></p>
+                            
+                            <p style="margin-top: 0">Quantidade</p>
+                            <div class="conttt" style="background-color: white; padding: 10px;">
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't1' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't1' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't2' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't2' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't3' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't3' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't4' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't4' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't5' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't5' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                <button class="bnt_tamanho_2 {% if item.tamanho != 't6' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't6' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                            </div>
                         </div>
                         
                         {% endfor %}

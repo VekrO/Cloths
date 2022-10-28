@@ -1,0 +1,61 @@
+{% load static %}
+{% load mathfilters %}
+    <!--Para loja-->
+    <div class="l-gerenciador">
+        <button class="c-bnt-gerenciador" onclick="addCategoria()"> <span> + </span> Nova coleção </button>
+
+        <a href="{% url 'minhas_colecoes' %}" onclick="chama_submenu()">
+            <button class="c-menu-gerenciador" onclick="chama_submenu()" id='colecoes'>
+                <p>
+                    <span> > </span> COLEÇÕES
+                </p>
+            </button>
+        </a>
+
+        <a href="{% url 'meus_pedidos' %}">
+            <button class="c-menu-gerenciador " id='pedidos'>
+                <p>
+                    <span> > </span> PEDIDOS
+                </p>
+            </button>
+        </a>
+
+        <a href="{% url 'em_breve' %}">
+            <button class="c-menu-gerenciador" id='historico'>
+                <p>
+                    <span> > </span> HISTORICO DE PEDIDOS
+                </p>
+            </button>
+        </a>
+
+    </div>
+
+ <!--scripts-->
+ <script defer>
+    i=0
+    function addCategoria() { 
+        if (i%2==0) {
+            document.getElementById('addCategoria').style.display = 'flex';
+            i+=1
+        } else {
+            document.getElementById('addCategoria').style.display = 'none';
+            i+=1
+        }
+    };
+</script>
+<div class="modal" id="addCategoria" style="background-color:rgb(255 255 255 0.3) !important;z-index: 5; display: none; width: 100vw;height: 100vh;align-items: center;justify-content: center">
+    <div class="container" style="filter: drop-shadow(0px 0px 15px gray);width: 70vw !important; height: 30vh;background-color: white;border-radius: 1rem;">
+        <label for="" onclick="addCategoria()" style="margin-top: 1rem;display: block;height: 2rem !important;background-color: #FFA41C;width:2rem !important;display: flex;align-items: center;justify-content: center;border-radius: 100%;font-weight: 900 !important;font-family: 'Poppins';color: white;">x</label>
+        <br>
+        <form action="{% url 'add_colecao' %}" method="POST">
+            {% csrf_token %}
+            <input name="nome" placeholder="Nome da Coleção" class="c-inpt-modal" type="text">
+            <button type="submit" style="background-color: #FFA41C;" class="addList">ADICIONAR</button>
+        </form>
+    </div>
+</div>
+
+
+
+   
+

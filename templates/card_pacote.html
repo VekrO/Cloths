@@ -5,7 +5,7 @@
 <!-- CARD -->
 
 <div class="c-card-pacotes" style="margin-left: 15px">
-    <a href="{% url 'ver_pedido' pedido.pk %}">
+    <a href="{% url 'ver_pacote' pedido.pk %}">
         <div class="img">
             <img style="z-index: 5;height:300px;object-fit: cover;" src="{{pedido.itens.all.0.roupa.foto.url}}"
                 alt="">
@@ -25,10 +25,18 @@
     </a>
     <div class="c-card-colection__infos" style="padding: 20px 0px;">
         <h3>{{pedido.loja.nome_loja}}</h3>
-        <p style="height: 5px;">04 peças</p>
-        <a href="{% url 'ver_pedido' pedido.pk %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
-        <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
-        <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
+        <p style="height: 5px;"> {% conta_pecas_pedido pedido %} peças</p>
+        <a href="{% url 'ver_pacote' pedido.pk %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
+        {% if pedido.status == "NF" %}
+        <a href="{% url 'pedir_pacote' pedido.pk %}"><button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button></a>
+        {% else %}
+        <button class="addList" type="button" style="font-size: 10px; background-color: gray;" disabled>Pedir Pacote</button>
+        {% endif %}
+        {% if pedido.status == "NF" or pedido.status == "FE" %}
+            <a href="{% url 'cancelar_pacote' pedido.pk %}"><button class="addList" style="font-size: 10px">Cancelar Pacote</button></a>
+        {% else %}
+            <button class="addList" style="font-size: 10px; background-color: gray" disabled>Cancelar Pacote</button>
+        {% endif %}
     </div>
 </div>
 

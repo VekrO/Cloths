@@ -67,7 +67,7 @@
 <div class="l-container-colecoes">
 
 
-    <div class="l-gerenciador">
+   { <div class="l-gerenciador">
         <button class="c-bnt-gerenciador" onclick="addCategoria()"> <span> + </span> Nova coleção </button>
 
 
@@ -90,7 +90,7 @@
             </button>
         </a>
 
-        <a href="historico_pedidos.html">
+        <a href="{% url 'em_breve' %}">
             <button class="c-menu-gerenciador">
                 <p>
                     <span> > </span> HISTORICO DE PEDIDOS
@@ -98,14 +98,14 @@
             </button>
         </a>
 
-    </div>
-    <div class="l-colections">
+    </div>}
+    <div class="l-colections" style="align-items: flex-start !important; ">
         {% if pk %}
-        <h2>Todas as roupas</h2>
         {% card_colecoes request pk %}
-        {% elif roupas %}
+        {% elif not pk %}
+        <h2 style="width:100%;height: 2.5rem;">Todas as roupas</h2> 
         {% for roupa in roupas %}
-            <div class="c-card-colection">
+            <div class="c-card-colection" style="margin-top: 1rem !important;">
                 <img src="{{roupa.foto.url}}" alt="">
                 <div class="c-card-colection__infos">
                     <h3>{{roupa.nome_roupa}}</h3>
@@ -133,6 +133,7 @@
                 </div>
             </div>
             {% endfor %}
+        {% elif roupas %}
         {% endif %}
         <!-- CARD -->
         {% comment %} {% for roupa in roupas %}

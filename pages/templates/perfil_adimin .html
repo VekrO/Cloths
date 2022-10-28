@@ -13,13 +13,11 @@
 <section>
     <nav>
         <input class="menu_user_bnt" type="checkbox">
-        <ul class="menu-user">
-            <li><a href="{% url 'perfil_loja'%}">Informações da loja</a></li>
-            <li><a class="active" href="{% url 'perfil_admin' %}">Perfil do adiministrador</a></li>
-            <li><a href="{% url 'editar_perfil_admin'%}">Editar Perfil</a></li>
-            <li><a href="{% url 'minhas_colecoes'%}">Minhas coleções</a></li>
-            <li><a href="meus_pacotes.html">Meus pacotes</a></li>
-        </ul>
+        {% menu_user request %}
+        <script>
+            link = document.getElementById('info_pessoal')
+            link.classList.add('active')
+        </script> 
     </nav>
 </section>
 

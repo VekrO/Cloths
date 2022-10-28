@@ -1,0 +1,33 @@
+{% load static %}
+{% load mathfilters %}
+
+ <!--Para normal user-->
+
+ <div class="l-gerenciador">
+    {% comment %} <button class="c-bnt-gerenciador"> <span> + </span> Novo Pacote </button> {% endcomment %}
+
+    <a href="{% url 'meus_pacotes'%}">
+        <button class="c-menu-gerenciador" id='pacotes'>
+            <p>
+                <span> > </span> PACOTES
+            </p>
+        </button>
+    </a>
+
+    <a href="{% url 'em_breve'%}">
+        <button class="c-menu-gerenciador" id='enviados'>
+            <p>
+                <span> > </span> PACOTES ENVIADOS
+            </p>
+        </button>
+    </a>
+
+    <a href="{% url 'em_breve' %}">
+        <button class="c-menu-gerenciador" id='historico'>
+            <p>
+                <span> > </span> HISTÓRICO DE PACOTES
+            </p>
+        </button>
+    </a>
+
+</div>

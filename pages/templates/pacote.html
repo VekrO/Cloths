@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% load post_tags %}
+{% block title %}Pacote{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'stylesCSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/gerenciador.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/styleLojasC.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/stylePerfil.css' %}">
+{% endblock css %}
+
+{% block content %}
+{% header request %}
+
+<section>
+    <nav>
+        <input class="menu_user_bnt" type="checkbox">
+        {% menu_user request %}    
+    </nav>
+</section>
+
+<div class="l-container-colecoes">
+
+
+    {% gerenciador_user %}
+    <script>
+        link = document.getElementById('pacotes')
+        link.classList.add('active-menu')
+    </script>
+
+    <div class="l-colections">
+
+        <div class="container">
+
+            <!-- informaçoes do pedido -->
+
+            <div class="row">
+                <div class="col-3">
+                    <img src={% if pedido.loja.logo_loja %}"{{pedido.loja.logo_loja.url}}"{% endif %} class="img_pff" alt="">
+                </div>
+                <div class="col">
+                    <div class="dt_pedido">
+                        <br>
+                        <h5 style="margin-bottom: 20px;"> {{pedido.loja.nome_loja}}</h5>
+                        <p><span>Email:</span>{% if pedido.loja.email_loja %} {{pedido.loja.email_loja}}{% endif %}</p>
+                        <p><span>Telefone:</span> {% if pedido.loja.telefone_loja %}{{pedido.loja.telefone_loja}}{% endif %}</p>
+                        <p><span>Endereço:</span> {{pedido.loja.endereco.rua}}, {{pedido.loja.endereco.numero}} - {{pedido.loja.endereco.bairro}}, {{pedido.loja.endereco.cidade}} - {{pedido.loja.endereco.estado}}, {{pedido.loja.endereco.cep}}</p>
+                        <p><span>Data do Pedido:</span> {{pedido.data_pedido}}</p>
+                        <p><span>N° de peças:</span> {% conta_pecas_pedido pedido %}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <br><br>
+                    <h2>Roupas Solicitadas (<span style="color: green">{{pedido.get_status_display}}</span>)</h2>
+                    <br><br>
+                </div>
+            </div>
+
+            <!-- roupas solicitadas -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="box-ropas-solicitadas">
+
+                        {% for item in pedido.itens.all %}
+                                                <!-- CARDS -->
+
+                                                <div class="card-rs">
+                                                    <img src="{{item.roupa.foto.url}}" alt="">
+                        
+                                                    <p>Tamanhos solicitados</p>
+                                                    <div class="conttt" style="background-color: white; padding: 10px;">
+                                                        {% if item.roupa.categoria.tipo_tamanho.nome_tipo == 'Letra' %}
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't1' or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't2' or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't3' or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't4' or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't5' or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't6' or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
+                                                        {% elif item.roupa.categoria.tipo_tamanho.nome_tipo == 'Numero' %}
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't1' or not item.roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't2' or not item.roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't3' or not item.roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't4' or not item.roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't5' or not item.roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                                                            <button class="bnt_tamanho_2 {% if item.tamanho != 't6' or not item.roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
+                                                        {% endif %}
+                                                    </div>
+                                                    
+                                                    <p style="margin-top: 0">Quantidade</p>
+                                                    <div class="conttt" style="background-color: white; padding: 10px;">
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't1' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't1' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't2' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't2' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't3' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't3' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't4' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't4' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't5' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't5' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                        <button class="bnt_tamanho_2 {% if item.tamanho != 't6' %}nao_tem {% else %}tem{% endif %}" disabled>{% if item.tamanho != 't6' %}0{% else %}{{item.quantidade}}{% endif %}</button>
+                                                    </div>
+                        
+                                                    <button style="margin-top: 0" class="addList" style="font-size: 10px;">Remover do Pedido</button>
+                                                </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% footer %}
+{% endblock content %}
+
+

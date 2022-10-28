@@ -21,7 +21,7 @@
 
         <div class="c-container-roupa__informacoes">
             <div class="c-container-ropa__loja">
-                <a href=""><img src="{{loja.logo_loja.url}}" alt=""></a>
+                <a href="{% url 'loja' loja.endereco.cidade loja.nome_loja       %}"><img src="{{loja.logo_loja.url}}" alt=""></a>
                 <a href="">
                     <h1>{{loja.nome_loja}}</h1>
                 </a>
@@ -136,21 +136,21 @@
                     <h5 style="margin-top: 15px; margin-bottom: 15px;">Quantidade desejada ( Por tamanho )</h5>
                     {% if roupa.categoria.tipo_tamanho.nome_tipo == "Letra" %}
                         <div class="conttt" style="width: 100%;">
-                            <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="PP" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1 %}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="P" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2 %}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="M" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3 %}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="G" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4 %}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="GG" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5 %}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
-                            <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="XG" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6 %}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="t1" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1 %}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="t2" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2 %}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="t3" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3 %}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="t4" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4 %}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="t5" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5 %}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
+                            <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="t6" {% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6 %}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
                         </div>
                     {% elif roupa.categoria.tipo_tamanho.nome_tipo == "Numero" %}
                     <div class="conttt" style="width: 100%;">
-                        <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="34"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1%}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="35"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2%}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="36"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3%}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="37"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4%}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="38"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5%}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
-                        <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="39+"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6%}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t1 < 1 or not roupa.t1%}nao_tem{% else %}tem esseprodutotem" data-size="t1"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t1 < 1 or not roupa.t1%}disabled{% endif %} min="0" max="{{roupa.t1}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t2 < 1 or not roupa.t2%}nao_tem{% else %}tem esseprodutotem" data-size="t2"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t2 < 1 or not roupa.t2%}disabled{% endif %} min="0" max="{{roupa.t2}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t3 < 1 or not roupa.t3%}nao_tem{% else %}tem esseprodutotem" data-size="t3"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t3 < 1 or not roupa.t3%}disabled{% endif %} min="0" max="{{roupa.t3}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t4 < 1 or not roupa.t4%}nao_tem{% else %}tem esseprodutotem" data-size="t4"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t4 < 1 or not roupa.t4%}disabled{% endif %} min="0" max="{{roupa.t4}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t5 < 1 or not roupa.t5%}nao_tem{% else %}tem esseprodutotem" data-size="t5"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t5 < 1 or not roupa.t5%}disabled{% endif %} min="0" max="{{roupa.t5}}" value="0">
+                        <input class="bnt_tamanho {% if roupa.t6 < 1 or not roupa.t6%}nao_tem{% else %}tem esseprodutotem" data-size="t6"{% endif %} style="padding-left: 5px" type="number" {% if roupa.t6 < 1 or not roupa.t6%}disabled{% endif %} min="0" max="{{roupa.t6}}" value="0">
                     </div>
                     {% endif %}
                     

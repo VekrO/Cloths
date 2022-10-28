@@ -1,0 +1,29 @@
+{% load static %}
+{% load post_tags %}
+{% load mathfilters %}
+
+{% if pedido.status != 'NF' %}
+<!-- CARD -->
+
+<div class="c-card-colection" style="height: 350px;">
+    <a href="{% url 'ver_pedido' pedido.pk %}" >
+        {% if usuario_pedinte.foto_usuario %} 
+            <img src="{{usuario_pedinte.foto_usuario.url}}" alt="">
+        {% else%}
+            <img src="{% static 'imagens/user.png' %}" alt="">
+        {% endif %}
+    </a>
+    <div class="c-card-colection__infos">
+        <h3>{{usuario_pedinte.nome}}</h3>
+        <p style="height: 5px;">{% conta_pecas_pedido pedido %} peças</p>
+        <div class="c-barraBaixa">
+            <p style="width: 100%">Data do pedido: {{pedido.data_pedido}}</p>
+            <br>
+        </div>
+        <a href="{% url 'ver_pedido' pedido.pk %}"><button class="addList" style="font-size: 10px">Ver dados do Pedido</button></a>
+        <a href="{% url 'enviar_pedido' pedido.pk %}"><button class="addList" style="font-size: 10px; background-color: #43a047;">Finalizar Pedido</button></a>
+    </div>
+</div>
+
+<!-- CARD -->
+{% endif %}

@@ -15,6 +15,8 @@ from roupas.models import Categoria, Roupa
 
 from django.views.decorators.csrf import csrf_exempt
 import uuid
+
+from users.models import User
 # Create your views here.
 
 
@@ -119,7 +121,10 @@ class AtualizarParaContaComercial(View):
 
 class MinhasColecoes(View):
     def get(self, request):
-        return render(request, 'minhas_colecoes.html')
+        context = {}
+        roupas = Roupa.objects.filter(colecao__loja=request.user.loja)
+        context['roupas'] = roupas
+        return render(request, 'minhas_colecoes.html', context )
     def post(self, request):
         pass
 
@@ -262,6 +267,32 @@ class MeusPacotes(View):
         Pedido.objects.adicionar_item(item=item, user_id=user_id, loja_id=loja_id)
 
         return HttpResponse('Salve')
+    
+class VerPacote(View):
+    def get(self, request, pk):
+        context = {}
+        pedido = Pedido.objects.get(pk=pk)
+        context['pedido'] = pedido
+        return render(request, 'pacote.html', context)
+    def post(self, request):
+        pass
+
+def pedir_pacote(request, pk):
+    pacote = Pedido.objects.get(pk=pk)
+    pacote.status = 'FE'
+    pacote.save()
+    return redirect('meus_pacotes')
+
+def cancelar_pacote(request, pk):
+    pacote = Pedido.objects.get(pk=pk)
+    pacote.delete()
+    return redirect('meus_pacotes')
+
+def enviar_pacote(request, pk):
+    pacote = Pedido.objects.get(pk=pk)
+    pacote.status = 'EV'
+    pacote.save()
+    return redirect('meus_pedidos')
 
 class MeusPedidos(View):
     def get(self, request):
@@ -278,6 +309,8 @@ class VerPedido(View):
         context = {}
         pedido = Pedido.objects.get(pk=pk)
         context['pedido'] = pedido
+        usuario_pedinte = User.objects.get(pk=pedido.usuario_pedinte)
+        context['usuario_pedinte'] = usuario_pedinte
         return render(request, 'pedido.html', context)
     def post(self, request):
         pass

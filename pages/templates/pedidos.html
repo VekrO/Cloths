@@ -28,40 +28,18 @@
 <div class="l-container-colecoes">
 
 
-    <div class="l-gerenciador">
-        <button class="c-bnt-gerenciador"> <span> + </span> Nova coleção </button>
-
-        <a href="{% url 'minhas_colecoes' %}">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> COLEÇÕES
-                </p>
-            </button>
-        </a>
-
-        <a href="#">
-            <button class="c-menu-gerenciador active-menu">
-                <p>
-                    <span> > </span> PEDIDOS
-                </p>
-            </button>
-        </a>
-
-        <a href="historico_pedidos.html">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> HISTORICO DE PEDIDOS
-                </p>
-            </button>
-        </a>
-
-    </div>
-
+    {% gerenciador_loja %}
+    <script>
+        link = document.getElementById('pedidos')
+        link.classList.add('active-menu')
+    </script>
 
     <div class="l-colections">
 
         {% for pedido in pedidos %}
-                <!-- CARD -->
+            {% card_pedido pedido %}
+
+                {% comment %} <!-- CARD -->
 
                 <div class="c-card-colection" style="height: 350px;">
                     <a href="{% url 'ver_pedido' pedido.pk %}" ><img src="{{pedido.usuario_pedinte.foto_usuario.url}}" alt=""></a>
@@ -77,7 +55,7 @@
                     </div>
                 </div>
         
-                <!-- CARD -->
+                <!-- CARD --> {% endcomment %}
         {% endfor %}
     </div>
 

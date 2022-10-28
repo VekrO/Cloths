@@ -1,9 +1,8 @@
 {% load static %}
 {% load mathfilters %}
-<h2>{{colecao.nome}}</h2>
-<br>
+<h2 style="width:100%;height: 2.5rem;margin-bottom:1rem !important;">{{colecao.nome}}</h2>
 {% for roupa in roupas %}
-<div class="c-card-colection">
+<div class="c-card-colection" >
     <img src="{{roupa.foto.url}}" alt="">
     <div class="c-card-colection__infos">
         <h3>{{roupa.nome_roupa}}</h3>

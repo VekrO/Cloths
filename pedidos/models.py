@@ -19,22 +19,31 @@ class Item(models.Model):
 class PedidoManager(models.Manager):
     
     def create_pedido(self, user_id, loja_id):
-        pedido = self.model(
-                usuario_pedinte = user_id,
-                loja = Loja.objects.get(pk=loja_id),
-                status='NF'
-            )
-        pedido.save()
-        return pedido
+        if self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
+            print('caraca, deu merda')
+            raise ValueError('Já tem esse pedido')
+        else:
+            pedido = self.model(
+                    usuario_pedinte = user_id,
+                    loja = Loja.objects.get(pk=loja_id),
+                    status='NF'
+                )
+            pedido.save()
+            return pedido
 
     def adicionar_item(self, item, user_id, loja_id):
-
-        if self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
+        if not self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
+            pedido = self.create_pedido(user_id, loja_id)
+            pedido.add_item(item)
+        elif self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
+            pedido = self.get(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id))
+            pedido.add_item(item)
+        """ if self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
             pedido = self.get(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id))
             pedido.add_item(item)
         elif not self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
             pedido = self.create_pedido(user_id, loja_id)
-            pedido.add_item(item)
+            pedido.add_item(item) """
 
             
 

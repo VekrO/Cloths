@@ -28,38 +28,16 @@
 
 <div class="l-container-colecoes">
 
-    <div class="l-gerenciador">
-        <button class="c-bnt-gerenciador"> <span> + </span> Novo Pacote </button>
-
-        <a href="{% url 'meus_pacotes'%}">
-            <button class="c-menu-gerenciador active-menu">
-                <p>
-                    <span> > </span> PACOTES
-                </p>
-            </button>
-        </a>
-
-        <a href="{% url 'em_breve'%}">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> PACOTES ENVIADOS
-                </p>
-            </button>
-        </a>
-
-        <a href="{% url 'em_breve' %}">
-            <button class="c-menu-gerenciador">
-                <p>
-                    <span> > </span> HISTÓRICO DE PACOTES
-                </p>
-            </button>
-        </a>
-
-    </div>
-
+    {% gerenciador_user %}
+    <script>
+        link = document.getElementById('pacotes')
+        link.classList.add('active-menu')
+    </script>
 
     <div class="l-colections">
+
         {% card_pacote request %}
+        
 {% comment %}         <!-- CARD -->
 
         <div class="c-card-pacotes" style="margin-left: 15px">

@@ -110,18 +110,44 @@ def footer():
         
     }
 
-@register.inclusion_tag('gerenciador.html')
-def gerenciador():
-    
+@register.inclusion_tag('gerenciador_loja.html')
+def gerenciador_loja():
     return {
+        
+    }
 
+@register.inclusion_tag('gerenciador_user.html')
+def gerenciador_user():
+    return {
+        
     }
 
 @register.inclusion_tag('card_pacote.html')
 def card_pacote(request):
     context = {}
+    pecas = 0
     if request.user.is_authenticated:
         user = User.objects.get(email=request.user.email)
-        pedidos = Pedido.objects.filter(usuario_pedinte=user)
+        pedidos = Pedido.objects.filter(usuario_pedinte=user.pk).order_by('data_pedido')
+        print(pedidos)
+        for pedido in pedidos:
+            pass
         context['pedidos'] = pedidos
     return context
+
+@register.inclusion_tag('card_pedido.html')
+def card_pedido(pedido):
+    context = {}
+    if pedido:
+        context['pedido'] = pedido
+    usuario_pedinte = User.objects.get(pk=pedido.usuario_pedinte)
+    if usuario_pedinte:
+        context['usuario_pedinte'] = usuario_pedinte
+    return context
+
+@register.simple_tag
+def conta_pecas_pedido(pedido):
+    pecas = 0
+    for item in pedido.itens.all():
+        pecas += item.quantidade
+    return pecas

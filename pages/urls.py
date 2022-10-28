@@ -25,5 +25,9 @@ urlpatterns = [
     path('lojas_cadastradas/<str:cidade>/', views.LojasCidade.as_view(), name='cidade'),
     path('lojas_cadastradas/<str:cidade>/<str:loja>/', views.LojaVer.as_view(), name='loja'),
     path('lojas_cadastradas/<str:cidade>/<str:loja>/<int:roupa>/', views.RoupaVer.as_view(), name='roupa'),
-    path('pedido/<int:pk>', views.VerPedido.as_view(), name='ver_pedido'),
+    path('pedido/<int:pk>/', views.VerPedido.as_view(), name='ver_pedido'),
+    path('meus_pacotes/pacote/<int:pk>/', views.VerPacote.as_view(), name='ver_pacote'),
+    path('meus_pacotes/pacote/pedir_pacote/<int:pk>/', views.pedir_pacote, name='pedir_pacote'),
+    path('meus_pacotes/pacote/cancelar_pacote/<int:pk>/', views.cancelar_pacote, name='cancelar_pacote'),
+    path('meus_pedidos/pedido/enviar_pedido/<int:pk>', views.enviar_pacote, name='enviar_pedido'),
 ]
