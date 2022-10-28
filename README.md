@@ -13,5 +13,5 @@ Projeto Cloths
 ### Desenvolvedores
 
 Front-end: https://github.com/MateusPratu <br>
-Back-end: https://github.com/JoaoVs17
-Back-end: https://github.com/VekrO
+Back-end: https://github.com/JoaoVs17 <br>
+Back-end: https://github.com/VekrO <br>
