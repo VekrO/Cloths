@@ -124,23 +124,29 @@ def gerenciador_user():
 
 @register.inclusion_tag('card_pacote.html')
 def card_pacote(request):
+    
     context = {}
     pecas = 0
     if request.user.is_authenticated:
-        user = User.objects.get(email=request.user.email)
-        pedidos = Pedido.objects.filter(usuario_pedinte=user.pk).order_by('data_pedido')
-        print(pedidos)
-        for pedido in pedidos:
-            pass
-        context['pedidos'] = pedidos
+        usuario_pedinte = request.user.pk
+    else:
+        usuario_pedinte = request.session.get('usuario')
+
+    pedidos = Pedido.objects.filter(usuario_pedinte=usuario_pedinte).order_by('data_pedido')
+    context['pedidos'] = pedidos
     return context
+    
 
 @register.inclusion_tag('card_pedido.html')
 def card_pedido(pedido):
     context = {}
+
     if pedido:
+        print(pedido)
         context['pedido'] = pedido
+
     usuario_pedinte = User.objects.get(pk=pedido.usuario_pedinte)
+
     if usuario_pedinte:
         context['usuario_pedinte'] = usuario_pedinte
     return context

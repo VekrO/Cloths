@@ -7,7 +7,6 @@ import re
 from django.core.files.storage import FileSystemStorage
 import os
 
-
 #LOCAL
 from enderecos.models import Endereco
 
@@ -56,9 +55,11 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         user.set_grupo('usuario_normal')
         user.save(using=self._db)
+
         return user
 
     def create_user(self, email, password, cpf, **other):
+
         other.setdefault('is_superuser', False)
         other.setdefault('is_staff', False)
         other.setdefault('is_active', True)
@@ -93,6 +94,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
     nome = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     telefone = models.CharField(max_length=255)
@@ -108,7 +110,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-
 
     def set_foto_usuario(self, caminho, uploadImage, request):
         if request.FILES:

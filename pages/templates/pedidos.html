@@ -39,7 +39,7 @@
         {% for pedido in pedidos %}
             {% card_pedido pedido %}
 
-                {% comment %} <!-- CARD -->
+                <!-- CARD -->
 
                 <div class="c-card-colection" style="height: 350px;">
                     <a href="{% url 'ver_pedido' pedido.pk %}" ><img src="{{pedido.usuario_pedinte.foto_usuario.url}}" alt=""></a>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
         
-                <!-- CARD --> {% endcomment %}
+                <!-- CARD --> 
         {% endfor %}
     </div>
 

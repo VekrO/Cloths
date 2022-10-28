@@ -19,10 +19,6 @@
     <nav>
         <input class="menu_user_bnt" type="checkbox">
         {% menu_user request %}
-        <script>
-            link = document.getElementById('meus_pacotes')
-            link.classList.add('active')
-        </script>
     </nav>
 </section>
 
@@ -37,8 +33,7 @@
     <div class="l-colections">
 
         {% card_pacote request %}
-        
-{% comment %}         <!-- CARD -->
+    <!-- CARD -->
 
         <div class="c-card-pacotes" style="margin-left: 15px">
             <a href="">
@@ -60,15 +55,23 @@
                 </div>
             </a>
             <div class="c-card-colection__infos" style="padding: 20px 0px;">
+                {% if request.user.is_authenticated %}
+                    <h3>Nome da loja</h3>
+                    <p style="height: 5px;">04 peças</p>
+                    <a href="{% url 'ver_pedido' request.user.pk %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
+                    <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
+                    <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
+                {% else %}
                 <h3>Nome da loja</h3>
-                <p style="height: 5px;">04 peças</p>
-                <a href="{% url 'ver_pedido' %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
-                <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
-                <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
+                    <p style="height: 5px;">04 peças</p>
+                    <a href="{% url 'ver_pedido' request.session.usuario %}"><button class="addList" style="font-size: 10px; background-color: #ff8f00;">Detalhes do Pacote</button></a>
+                    <button class="addList" style="font-size: 10px; background-color: #43a047;">Pedir Pacote</button>
+                    <button class="addList" style="font-size: 10px">Cancelar Pacote</button>
+                {% endif %}
             </div>
         </div>
 
-        <!-- CARD --> {% endcomment %}
+        <!-- CARD -->
 
     </div>
 

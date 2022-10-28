@@ -6,14 +6,18 @@
  <div class="l-gerenciador">
     {% comment %} <button class="c-bnt-gerenciador"> <span> + </span> Novo Pacote </button> {% endcomment %}
 
-    <a href="{% url 'meus_pacotes'%}">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'meus_pacotes' request.user.pk %}">
+    {% else %}
+    <a href="{% url 'meus_pacotes' 4 %}">
+    {% endif %}
         <button class="c-menu-gerenciador" id='pacotes'>
             <p>
                 <span> > </span> PACOTES
             </p>
         </button>
     </a>
-
+            
     <a href="{% url 'em_breve'%}">
         <button class="c-menu-gerenciador" id='enviados'>
             <p>

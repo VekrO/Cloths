@@ -1,11 +1,14 @@
+from math import prod
 from tkinter import N
 from django.shortcuts import HttpResponse, render, redirect
+from django.urls import reverse, reverse_lazy
 from django.views import View
 #Contrib
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.files.storage import FileSystemStorage
+from braces.views import GroupRequiredMixin
 #local
 from enderecos.models import Endereco
 from lojas.models import Loja, Plano
@@ -14,11 +17,9 @@ from pedidos.models import Item, Pedido
 from roupas.models import Categoria, Roupa
 
 from django.views.decorators.csrf import csrf_exempt
-import uuid
+import hashlib, random
 
 from users.models import User
-# Create your views here.
-
 
 def get_POST_form_fields(request, fields):
     dicionario = {}
@@ -33,7 +34,28 @@ def sair(request):
 
 class Home(View):
     def get(self, request):
+
+        # Se o usuário não estiver conectado, gerar uma sessão de anônimo.
+        if(not request.user.is_authenticated):
+            
+            # Caso a sessão exista com um pedido realizado, não criar uma nova, caso contrário, criar uma nova sessão!
+           
+            if(request.session.get('usuario')):
+
+                print(Pedido.objects.filter(usuario_pedinte=request.session.get('usuario')).exists())
+
+            elif not request.session.get('usuario'):
+
+                # Criar hash para guardar na sessão.
+                hash = random.getrandbits(16)
+                print(hash)
+                request.session['usuario'] = int(hash)
+
+                print('Nova sessão: ', request.session.get('usuario'))
+                
+
         return render(request, 'home.html')
+
     def post(self, request):
         pass
 
@@ -81,13 +103,18 @@ class EditarPerfil(View):
         user.set_foto_usuario('fotos_usuarios', 'foto_usuario', request)
         return redirect('perfil')
 
-class PerfilLoja(View):
+# Só para dono de loja.
+class PerfilLoja(GroupRequiredMixin, View):
+    # Verificar
+    group_required = [u"usuario_dono_loja"]
     def get(self, request):
         return render(request, 'perfil_loja.html')
     def post(self, request):
         pass
 
-class EditarPerfilLoja(View):
+class EditarPerfilLoja(GroupRequiredMixin, View):
+    # Verificar
+    group_required = [u"usuario_dono_loja"]
     def get(self, request):
         return render(request, 'perfil_loja_editar.html')
     def post(self, request):
@@ -120,6 +147,7 @@ class AtualizarParaContaComercial(View):
         return redirect('perfil')
 
 class MinhasColecoes(View):
+    # Verificar
     def get(self, request):
         context = {}
         roupas = Roupa.objects.filter(colecao__loja=request.user.loja)
@@ -128,6 +156,7 @@ class MinhasColecoes(View):
     def post(self, request):
         pass
 
+# Verificar
 def add_colecao(request):
     nome = request.POST.get('nome')
     Colecao.objects.create_colecao(nome, request.user.loja)
@@ -154,14 +183,23 @@ class VerColecao(View):
         return redirect('colecao', pk = pk)
 
 class TelaPesquisa(View):
+
     def get(self, request):
-        query = request.GET.get('query')
-        context = {'query':query}
-        context ['resultados_roupas'] = Roupa.objects.pesquisa_roupas(query)
-        context ['resultados_lojas'] = Loja.objects.pesquisa_lojas(query)
-        return render(request, 'pesquisa.html', context)
+
+        product = request.GET.get('product')
+        if len(str(product)) == 0:
+            return render(request, 'pesquisa.html', context={'nenhum__produto_encontrado': 'Nenhum produto encontrado!', 'nenhuma_loja_encontrada': 'Nenhuma loja encontrada!'})
+        elif Roupa.objects.pesquisa_roupas(query=product).count() >= 1 or Loja.objects.pesquisa_lojas(query=product).count() >= 1:
+            context = {}
+            context['resultados_roupas'] = Roupa.objects.pesquisa_roupas(product)
+            context['resultados_lojas'] = Loja.objects.pesquisa_lojas(product)
+            return render(request, 'pesquisa.html', context)
+        else:
+            return render(request, 'pesquisa.html', context={'nenhum__produto_encontrado': 'Nenhum produto encontrado!', 'nenhuma_loja_encontrada': 'Nenhuma loja encontrada!'})
+
     def post(self, request):
         pass
+            
 
 def pesquisar(self, request):
     return redirect('tela_pesquisa')
@@ -217,16 +255,12 @@ class RoupaVer(View):
         context['roupa'] = Roupa.objects.get(pk=roupa)
 
         if(request.user.is_authenticated):
-            print('Conectado')
+            # Usuário conectado!
             context['user_id'] = request.user.pk
             return render(request, 'ropa.html', context)
         else:
-
             # Usuário Anônimo.
-            # Gerar um ID único para o usuário não conectado!
-            id_unico = uuid.uuid4()
-            print(id_unico)
-            context['user_id'] = id_unico
+            context['user_id'] = request.session.get('usuario')
             return render(request, 'ropa.html', context)
 
     def post(self, request):
@@ -239,22 +273,34 @@ class EmBreve(View):
         pass
 
 class MeusPacotes(View):
-    def get(self, request):
+    def get(self, request, pk):
+
         context = {}
+        
         if request.user.is_authenticated:
-            pedidos = Pedido.objects.filter(usuario_pedinte=request.user)
+            pedidos = Pedido.objects.filter(usuario_pedinte=request.user.pk)
             context['pedidos'] = pedidos
+        else:
+            pedidos = Pedido.objects.filter(usuario_pedinte=request.session.get('usuario'))
+            context['pedidos'] = pedidos
+
         return render (request, 'meusPacotes.html', context)
 
-    def post(self, request):
+    def post(self, request, pk):
 
-        # Receber e pegar parâmetros.
+        # Verificar se existe a sessão de usuário conectado!
+
         id = request.POST.get('product_id')
         quantidade = request.POST.get('product_qnt')
         tamanho = request.POST.get('product_size')
         loja_id = request.POST.get('loja_id')
-        user_id = request.POST.get('user_id')
-        
+
+        # Captura o ID do usuário.
+        if(request.user.is_authenticated):
+            user_id = request.user.pk
+        else:
+            user_id = request.session.get('usuario')
+
         roupa = Roupa.objects.get(pk=id)
 
         item = Item.objects.create(
@@ -266,7 +312,7 @@ class MeusPacotes(View):
 
         Pedido.objects.adicionar_item(item=item, user_id=user_id, loja_id=loja_id)
 
-        return HttpResponse('Salve')
+        return HttpResponse('Produto Adicionado')
     
 class VerPacote(View):
     def get(self, request, pk):
@@ -304,8 +350,9 @@ class MeusPedidos(View):
         pass
 
 class VerPedido(View):
+    group_required = [u"usuario_dono_loja"]
     def get(self, request, pk):
-        #é só para lojas
+        # É só para Lojas
         context = {}
         pedido = Pedido.objects.get(pk=pk)
         context['pedido'] = pedido

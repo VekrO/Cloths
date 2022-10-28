@@ -6,13 +6,22 @@
     <li><a id='info_pessoal' href="{% url 'perfil' %}" class="">Perfil do adiministrador</a></li>
     <li><a id='editar_perfil' href="{% url 'editar_perfil'%}" class="">Editar Perfil</a></li>
     <li><a id='minhas_colecoes' href="{% url 'minhas_colecoes'%}" class="">Minhas coleções</a></li>
-    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' %}" class="">Meus pacotes</a></li>
+    {% if request.user.is_authenticated %}
+    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.user.pk %}" class="">Meus pacotes</a></li>
+    {% endif %}
+    {% if request.session.usuario %}
+        <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.session.usuario %}" class="">Meus pacotes</a></li>
+    {% endif %}
 </ul>
 {% else %}
 <ul class="menu-user">
     <li><a id='info_pessoal' href="{% url 'perfil' %}" class="">Informações pessoais</a></li>
     <li><a id='editar_perfil' href="{% url 'editar_perfil' %}" class="">Editar perfil</a></li>
-    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' %}" class="">Meus pacotes</a></li>
+    {% if request.session.usuario %}
+    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.session.usuario %}" class="">Meus pacotes</a></li>
+    {% else %}
+    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.user.pk %}" class="">Meus pacotes</a></li>
+    {% endif %}
 </ul>
 {% endif %}
 

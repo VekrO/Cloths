@@ -8,6 +8,7 @@ from roupas.models import Roupa
 
 # Create your models here.
 class Item(models.Model):
+    
     user_id = models.CharField(max_length=255)
     roupa = models.ForeignKey(Roupa, on_delete=models.CASCADE, related_name='item')
     tamanho = models.CharField(max_length=2)
@@ -20,7 +21,6 @@ class PedidoManager(models.Manager):
     
     def create_pedido(self, user_id, loja_id):
         if self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
-            print('caraca, deu merda')
             raise ValueError('Já tem esse pedido')
         else:
             pedido = self.model(
@@ -32,12 +32,14 @@ class PedidoManager(models.Manager):
             return pedido
 
     def adicionar_item(self, item, user_id, loja_id):
+
         if not self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
             pedido = self.create_pedido(user_id, loja_id)
             pedido.add_item(item)
         elif self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
             pedido = self.get(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id))
             pedido.add_item(item)
+
         """ if self.filter(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id)).exists():
             pedido = self.get(usuario_pedinte=user_id, loja=Loja.objects.get(pk=loja_id))
             pedido.add_item(item)

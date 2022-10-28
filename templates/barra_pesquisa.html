@@ -3,7 +3,7 @@
 <form action="{% url 'tela_pesquisa' %}" method="GET">
     {% csrf_token %}
     <div id="divBusca">
-        <input name="query" type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+        <input name="product" type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
         <button type="submit"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
     </div>
 </form>

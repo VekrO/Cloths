@@ -2,7 +2,6 @@ let products = document.querySelectorAll('.esseprodutotem');
 let formAdd = document.querySelector('.form-add');
 
 // Stopping form submit.
-console.log('k')
 
 formAdd.addEventListener('submit', (e)=>{
 
@@ -21,7 +20,7 @@ formAdd.addEventListener('submit', (e)=>{
             if(element.value != 0){
                 $.ajax({
                     type: "POST",
-                    url: "/meus_pacotes/",
+                    url: "/meus_pacotes/" + document.querySelector('.userInfo').dataset.userid + '/',
                     data: {
                         'product_id': document.querySelector('.addButton').dataset.id,
                         'product_qnt': element.value,
