@@ -18,6 +18,7 @@ from roupas.models import Categoria, Roupa
 
 from django.views.decorators.csrf import csrf_exempt
 import hashlib, random
+from django.contrib import messages
 
 from users.models import User
 
@@ -74,6 +75,12 @@ class Cadastro(View):
     def get(self, request):
         return render(request, 'creatAcount.html')
     def post(self, request):
+
+        if(User.objects.filter(email=request.POST.get('email'))):
+            print('E-mail em uso!')
+            messages.warning(request, 'O e-mail já está em uso!')
+            return redirect('cadastro')
+
         d = get_POST_form_fields(request, ['nome', 'cpf', 'rg', 'telefone', 'email', 'senha', 'cep', 'estado', 'cidade', 'rua', 'bairro', 'numero'])
         if len(d) < 12:
             raise ValueError('Faltam valores a serem inseridos')
@@ -82,7 +89,7 @@ class Cadastro(View):
         db=get_user_model()
         user = db.objects.create_user(d['email'], d['senha'], d['cpf'], nome=d['nome'], telefone=d['telefone'], rg=d['rg'], endereco=endereco)
         user.save()
-        return redirect('home')
+        return redirect('login')
 
 class Perfil(View):
     def get(self, request):
@@ -278,6 +285,7 @@ class MeusPacotes(View):
         context = {}
         
         if request.user.is_authenticated:
+            print('autenticado')
             pedidos = Pedido.objects.filter(usuario_pedinte=request.user.pk)
             context['pedidos'] = pedidos
         else:

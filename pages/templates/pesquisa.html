@@ -124,11 +124,6 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="l-lojas-ropa-box">
-                                {% if request.user.is_authenticated %}
-                                <a href="{% url 'meus_pacotes' request.user.pk %}">e</a>
-                                {% else %}
-                                <a href="{% url 'meus_pacotes' request.session.usuario %}">e</a>
-                                {% endif %}
                                 {% for resultado in resultados_lojas %}
                                     <div class="c-lojas-ropa-card">
                                         <div class="row">

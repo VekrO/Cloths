@@ -7,7 +7,7 @@
     <li><a id='editar_perfil' href="{% url 'editar_perfil'%}" class="">Editar Perfil</a></li>
     <li><a id='minhas_colecoes' href="{% url 'minhas_colecoes'%}" class="">Minhas coleções</a></li>
     {% if request.user.is_authenticated %}
-    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.user.pk %}" class="">Meus pacotes</a></li>
+    <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.user.pk %}" class="">Meus pacotes logado</a></li>
     {% endif %}
     {% if request.session.usuario %}
         <li><a id='meus_pacotes' href="{% url 'meus_pacotes' request.session.usuario %}" class="">Meus pacotes</a></li>
